@@ -7,11 +7,9 @@ const { app, server } = require('./socket/index')
 const mongoConnection = require('./config/connectDB')
 
 
-app.use(cors(
-  {
-          origin: 'https://mern-real-time-chat-app-4.onrender.com'
-    }
-));
+app.use(cors({
+    origin: '*',
+  }));
 app.use(express.json())
 app.use(cookiesParser())
 
