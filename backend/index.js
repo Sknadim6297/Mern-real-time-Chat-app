@@ -8,10 +8,8 @@ const mongoConnection = require('./config/connectDB')
 
 
 app.use(cors(
-    {
-        origin : '*',
-        credentials : true,
-        methods : ['GET','POST','PUT','DELETE']
+  {
+          origin: 'https://mern-real-time-chat-app-4.onrender.com'
     }
 ));
 app.use(express.json())
