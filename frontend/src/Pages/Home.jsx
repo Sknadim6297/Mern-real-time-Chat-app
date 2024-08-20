@@ -14,7 +14,7 @@ const Home = () => {
 
   const fetchUserDetails = async()=>{
     try {
-        const URL = `${import.meta.env.VITE_BACKEND_URL}/api/user-details`
+        const URL = 'https://chat-app-backend-cqjd.onrender.com/api/user-details'
         const response = await axios({
           url : URL,
           withCredentials : true
@@ -37,7 +37,8 @@ const Home = () => {
 
   /***socket connection */
   useEffect(()=>{
-    const socketConnection = io(import.meta.env.VITE_BACKEND_URL,{
+    const url='https://chat-app-backend-cqjd.onrender.com'
+    const socketConnection = io(url,{
       auth : {
         token : localStorage.getItem('token')
       },
