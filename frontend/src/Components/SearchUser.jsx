@@ -18,8 +18,7 @@ const SearchUser = ({onClose}) => {
             setLoading(true)
             const response = await axios.post(URL,{
                 search : search
-                withCredentials: true
-            })
+            },{ withCredentials: true})
             setLoading(false)
 
             setSearchUser(response.data.data)
