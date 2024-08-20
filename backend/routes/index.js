@@ -4,10 +4,11 @@ const registerUser = require('../controller/registerUser')
 const logout = require('../controller/logout')
 
 const searchUser = require('../controller/searchUser')
-const checkEmail = require('../controller/CheckEmail')
+
 const checkPassword = require('../controller/CheckPassword')
 const userDetails = require('../controller/UserDetails')
 const updateUserDetails = require('../controller/UpdateUserDetails')
+const checkEmail = require('../controller/checkEmail')
 
 const router = express.Router()
 
