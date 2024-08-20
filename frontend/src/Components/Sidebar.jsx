@@ -3,10 +3,9 @@ import { IoChatbubbleEllipses } from "react-icons/io5";
 import { FaUserPlus } from "react-icons/fa";
 import { NavLink, useNavigate } from 'react-router-dom';
 import { BiLogOut } from "react-icons/bi";
-import Avatar from './Avatar'
+import Avatar from './Avatar';
 import { useDispatch, useSelector } from 'react-redux';
 import EditUserDetails from './EditUserDetails';
-import Divider from './Divider';
 import { FiArrowUpLeft } from "react-icons/fi";
 import SearchUser from './SearchUser';
 import { FaImage } from "react-icons/fa6";

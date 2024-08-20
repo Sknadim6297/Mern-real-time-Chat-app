@@ -6,11 +6,14 @@ const cookiesParser = require('cookie-parser')
 const { app, server } = require('./socket/index')
 const mongoConnection = require('./config/connectDB')
 
-// const app = express()
-app.use(cors({
-    origin : process.env.FRONTEND_URL,
-    credentials : true
-}))
+
+app.use(cors(
+    {
+        origin : '*',
+        credentials : true,
+        methods : ['GET','POST','PUT','DELETE']
+    }
+));
 app.use(express.json())
 app.use(cookiesParser())
 

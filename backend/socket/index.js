@@ -1,6 +1,7 @@
 const express = require('express');
 const { Server } = require('socket.io');
 const http = require('http');
+const cors = require('cors');
 const getUserDetailsFromToken = require('../helpers/getUserDetailsFromToken');
 const UserModel = require('../models/UserModel');
 const { ConversationModel, MessageModel } = require('../models/ConversationModel');
@@ -10,12 +11,7 @@ const app = express();
 
 /***socket connection */
 const server = http.createServer(app);
-const io = new Server(server, {
-    cors: {
-        origin: process.env.FRONTEND_URL,
-        credentials: true,
-    },
-});
+const io = new Server(server);
 
 const onlineUser = new Set();
 
