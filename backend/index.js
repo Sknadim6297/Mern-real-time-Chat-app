@@ -7,7 +7,7 @@ const { app, server } = require('./socket/index')
 const mongoConnection = require('./config/connectDB')
 
 
-const allowedOrigins = ['*'];
+const allowedOrigins = ['https://fronten-deploy.onrender.com'];
 app.use(cors({
   origin: function (origin, callback) {
     if (allowedOrigins.indexOf(origin) !== -1) {
