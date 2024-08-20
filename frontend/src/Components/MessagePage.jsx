@@ -1,18 +1,20 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { Link, useParams } from 'react-router-dom'
-import Avatar from './Avatar'
+
 import { HiDotsVertical } from "react-icons/hi";
 import { FaAngleLeft } from "react-icons/fa6";
 import { FaPlus } from "react-icons/fa6";
 import { FaImage } from "react-icons/fa6";
 import { FaVideo } from "react-icons/fa6";
 import { IoClose } from "react-icons/io5";
-import Loading from './Loading';
+
 import backgroundImage from '../assets/wallapaper.jpeg'
 import { IoMdSend } from "react-icons/io";
 import moment from 'moment'
 import uploadFile from '../helpers/uploadFiles';
+import Loading from './Loading';
+import Avatar from './Avatar';
 
 const MessagePage = () => {
   const params = useParams()

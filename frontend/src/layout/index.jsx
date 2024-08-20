@@ -14,3 +14,4 @@ const AuthLayouts = ({children}) => {
 }
 
 export default AuthLayouts
+
