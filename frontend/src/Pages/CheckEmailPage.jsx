@@ -55,7 +55,7 @@ const CheckEmailPage = () => {
 
             <div className='w-fit mx-auto mb-2'>
                 <PiUserCircle
-                  size={80}
+                  size={70}
                 />
             </div>
 
@@ -68,23 +68,25 @@ const CheckEmailPage = () => {
                   type='email'
                   id='email'
                   name='email'
-                  placeholder='enter your email' 
-                  className='bg-slate-100 px-2 py-1 focus:outline-primary'
+                  placeholder='Enter your email' 
+                  className='bg-slate-100 px-2 py-3 outline-none rounded-lg'
                   value={data.email}
                   onChange={handleOnChange}
                   required
                 />
               </div>
-
+             <div className='flex gap-1 w-fit mx-auto'>
               <button
-               className='bg-primary text-lg  px-4 py-1 hover:bg-secondary rounded mt-2 font-bold text-white leading-relaxed tracking-wide'
+               className='bg-red-600 text-lg  px-4 py-2 hover:bg-red-400 rounded-full mt-2 font-bold text-white w-40 flex justify-center items-center'
               >
                 Let's Go
               </button>
+              </div>
+              
 
           </form>
 
-          <p className='my-3 text-center'>New User ? <Link to={"/register"} className='hover:text-primary font-semibold'>Register</Link></p>
+          <p className='my-3 text-center'>New User ? <Link to={"/register"} className='hover:text-red-600 font-semibold'>Register</Link></p>
         </div>
     </div>
   )

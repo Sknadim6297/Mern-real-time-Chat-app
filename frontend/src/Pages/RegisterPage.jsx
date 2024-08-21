@@ -78,17 +78,15 @@ const RegisterPage = () => {
   return (
     <div className='mt-5'>
         <div className='bg-white w-full max-w-md  rounded overflow-hidden p-4 mx-auto'>
-          <h3>Welcome to Chat app!</h3>
-
-          <form className='grid gap-4 mt-5' onSubmit={handleSubmit}>
+          <form className='grid gap-2 mt-5' onSubmit={handleSubmit}>
               <div className='flex flex-col gap-1'>
                 <label htmlFor='name'>Name :</label>
                 <input
                   type='text'
                   id='name'
                   name='name'
-                  placeholder='enter your name' 
-                  className='bg-slate-100 px-2 py-1 focus:outline-primary'
+                  placeholder='Enter your name' 
+                  className='bg-slate-100 px-2 py-2 outline-none rounded-lg'
                   value={data.name}
                   onChange={handleOnChange}
                   required
@@ -101,8 +99,8 @@ const RegisterPage = () => {
                   type='email'
                   id='email'
                   name='email'
-                  placeholder='enter your email' 
-                  className='bg-slate-100 px-2 py-1 focus:outline-primary'
+                  placeholder='Enter your email' 
+                  className='bg-slate-100 px-2 py-2 outline-none rounded-lg'
                   value={data.email}
                   onChange={handleOnChange}
                   required
@@ -115,8 +113,8 @@ const RegisterPage = () => {
                   type='password'
                   id='password'
                   name='password'
-                  placeholder='enter your password' 
-                  className='bg-slate-100 px-2 py-1 focus:outline-primary'
+                  placeholder='Enter your password' 
+                  className='bg-slate-100 px-2 py-2 outline-none rounded-lg'
                   value={data.password}
                   onChange={handleOnChange}
                   required
@@ -148,21 +146,22 @@ const RegisterPage = () => {
                   type='file'
                   id='profile_pic'
                   name='profile_pic'
-                  className='bg-slate-100 px-2 py-1 focus:outline-primary hidden'
+                  className='bg-slate-100 px-2 py-1 outline-none hidden'
                   onChange={handleUploadPhoto}
                 />
               </div>
 
-
+              <div className='flex gap-1 w-fit mx-auto '>
               <button
-               className='bg-primary text-lg  px-4 py-1 hover:bg-secondary rounded mt-2 font-bold text-white leading-relaxed tracking-wide'
+               className='bg-red-600 text-lg  px-4 py-2 hover:bg-red-400 rounded-full mt-2 font-bold text-white w-40 flex justify-center items-center'
               >
                 Register
               </button>
+              </div>
 
           </form>
 
-          <p className='my-3 text-center'>Already have account ? <Link to={"/email"} className='hover:text-primary font-semibold'>Login</Link></p>
+          <p className='my-3 text-center'>Already have account ? <Link to={"/email"} className='hover:text-red-700 font-semibold'>Login</Link></p>
         </div>
     </div>
   )

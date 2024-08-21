@@ -7,7 +7,7 @@ function App() {
   return (
    <> 
       <Toaster/>
-       <main >
+       <main className='bg-white h-screen' >
         <Outlet/>
        </main>
    </>

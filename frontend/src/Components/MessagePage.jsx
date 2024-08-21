@@ -266,9 +266,9 @@ const MessagePage = () => {
           </section>
 
           {/**send message */}
-          <section className='h-16 bg-white flex items-center px-4'>
+          <section className='h-16 bg-white flex items-center px-6'>
               <div className='relative '>
-                  <button onClick={handleUploadImageVideoOpen} className='flex justify-center items-center w-11 h-11 rounded-full hover:bg-primary hover:text-white'>
+                  <button onClick={handleUploadImageVideoOpen} className='flex justify-center items-center w-11 h-11 rounded-full hover:bg-red-400 hover:text-white'>
                     <FaPlus size={20}/>
                   </button>
 
@@ -315,12 +315,12 @@ const MessagePage = () => {
                   <input
                     type='text'
                     placeholder='Type here message...'
-                    className='py-1 px-4 outline-none w-full h-full'
+                    className=' px-4 outline-none w-full h-full bg-white' 
                     value={message.text}
                     onChange={handleOnChange}
                   />
                   <button className='text-primary hover:text-secondary'>
-                      <IoMdSend size={28}/>
+                      <IoMdSend size={25}/>
                   </button>
               </form>
               

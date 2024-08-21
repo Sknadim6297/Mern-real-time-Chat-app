@@ -40,7 +40,7 @@ const SearchUser = ({onClose}) => {
                 <input 
                     type='text'
                     placeholder='Search user by name, email....'
-                    className='w-full outline-none py-1 h-full px-4'
+                    className='w-full outline-none py-1 h-full px-4 text-white'
                     onChange={(e)=>setSearch(e.target.value)}
                     value={search}
                 />
