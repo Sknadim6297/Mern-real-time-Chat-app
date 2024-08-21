@@ -50,10 +50,10 @@ const RegisterPage = () => {
     e.preventDefault()
     e.stopPropagation()
 
-      const URL = `${import.meta.env.VITE_BACKEND_URL}/api/register`
+      const URL = 'https://chat-app-backend-cqjd.onrender.com/api/register'
 
     try {
-        const response = await axios.post(URL,data)
+        const response = await axios.post(URL,data,{withCredentials: true})
 
         toast.success(response.data.message)
 

@@ -3,6 +3,10 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { logout, setOnlineUser, setSocketConnection, setUser } from '../redux/userSlice'
+<<<<<<< HEAD
+=======
+import Sidebar from '../Components/Sidebar'
+>>>>>>> 7e8138841231acfc132591dd4eca1e4804d153dc
 import io from 'socket.io-client'
 import Sidebar from '../Components/Sidebar'
 
@@ -14,7 +18,7 @@ const Home = () => {
 
   const fetchUserDetails = async()=>{
     try {
-        const URL = `${import.meta.env.VITE_BACKEND_URL}/api/user-details`
+        const URL = 'https://chat-app-backend-cqjd.onrender.com/api/user-details'
         const response = await axios({
           url : URL,
           withCredentials : true
@@ -37,7 +41,8 @@ const Home = () => {
 
   /***socket connection */
   useEffect(()=>{
-    const socketConnection = io(import.meta.env.VITE_BACKEND_URL,{
+    const url='https://chat-app-backend-cqjd.onrender.com'
+    const socketConnection = io(url,{
       auth : {
         token : localStorage.getItem('token')
       },

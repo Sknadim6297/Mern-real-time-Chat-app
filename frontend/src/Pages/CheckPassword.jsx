@@ -38,7 +38,7 @@ const CheckPasswordPage = () => {
     e.preventDefault()
     e.stopPropagation()
 
-    const URL = `${import.meta.env.VITE_BACKEND_URL}/api/password`
+    const URL = 'https://chat-app-backend-cqjd.onrender.com/api/password'
 
     try {
         const response = await axios({
