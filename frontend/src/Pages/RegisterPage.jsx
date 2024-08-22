@@ -77,7 +77,7 @@ const RegisterPage = () => {
 
   return (
     <div className='mt-5'>
-        <div className='bg-white w-full max-w-md  rounded overflow-hidden p-4 mx-auto px-10'>
+        <div className=' w-full max-w-md  rounded overflow-hidden p-4 mx-auto px-10'>
           <form className='grid gap-2 mt-5' onSubmit={handleSubmit}>
               <div className='flex flex-col gap-1'>
                 <label htmlFor='name'>Name :</label>
@@ -86,7 +86,7 @@ const RegisterPage = () => {
                   id='name'
                   name='name'
                   placeholder='Enter your name' 
-                  className='bg-slate-100 px-2 py-2 outline-none rounded-lg'
+                  className='bg-slate-100 px-2 py-2 outline-none rounded-lg text-black'
                   value={data.name}
                   onChange={handleOnChange}
                   required
@@ -100,7 +100,7 @@ const RegisterPage = () => {
                   id='email'
                   name='email'
                   placeholder='Enter your email' 
-                  className='bg-slate-100 px-2 py-2 outline-none rounded-lg'
+                  className='bg-slate-100 px-2 py-2 outline-none rounded-lg text-black'
                   value={data.email}
                   onChange={handleOnChange}
                   required
@@ -114,7 +114,7 @@ const RegisterPage = () => {
                   id='password'
                   name='password'
                   placeholder='Enter your password' 
-                  className='bg-slate-100 px-2 py-2 outline-none rounded-lg'
+                  className='bg-slate-100 px-2 py-2 outline-none rounded-lg text-black'
                   value={data.password}
                   onChange={handleOnChange}
                   required
@@ -125,7 +125,7 @@ const RegisterPage = () => {
                 <label htmlFor='profile_pic'>Photo :
 
                   <div className='h-14 bg-slate-200 flex justify-center items-center border rounded hover:border-primary cursor-pointer'>
-                      <p className='text-sm max-w-[300px] text-ellipsis line-clamp-1'>
+                      <p className='text-sm max-w-[300px] text-ellipsis line-clamp-1 text-black'>
                         {
                           uploadPhoto?.name ? uploadPhoto?.name : "Upload profile photo"
                         }

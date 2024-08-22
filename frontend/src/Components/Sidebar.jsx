@@ -12,7 +12,7 @@ import { FaImage } from "react-icons/fa6";
 import { FaVideo } from "react-icons/fa6";
 import { logout } from '../redux/userSlice';
 
-const Sidebar = () => {
+const Sidebar = ({darkMode,toggleDarkMode}) => {
     const user = useSelector(state => state?.user)
     const [editUserOpen,setEditUserOpen] = useState(false)
     const [allUser,setAllUser] = useState([])
@@ -59,16 +59,16 @@ const Sidebar = () => {
     }
 
   return (
-    <div className='w-full h-full grid grid-cols-[48px,1fr] bg-white'>
-            <div className='bg-slate-100 w-12 h-[90vh] rounded-tr-lg rounded-br-lg py-5 text-slate-600 flex flex-col justify-between'>
+    <div className='w-full h-full grid grid-cols-[48px,1fr] bg-white dark:bg-slate-900'>
+            <div className='bg-slate-100 dark:bg-slate-800 w-12 h-[100vh] rounded-tr-lg rounded-br-lg py-5 text-slate-600 dark:text-slate-400 flex flex-col justify-between'>
                 <div>
-                    <NavLink className={({isActive})=>`w-12 h-12 flex justify-center items-center cursor-pointer hover:bg-slate-200 rounded ${isActive && "bg-slate-200"}`} title='chat'>
+                    <NavLink className={({isActive})=>`w-12 h-12 flex justify-center items-center cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700 rounded ${isActive && "bg-slate-200 dark:bg-slate-700"}`} title='chat'>
                         <IoChatbubbleEllipses
                             size={20}
                         />
                     </NavLink>
 
-                    <div title='add friend' onClick={()=>setOpenSearchUser(true)} className='w-12 h-12 flex justify-center items-center cursor-pointer hover:bg-slate-200 rounded' >
+                    <div title='add friend' onClick={()=>setOpenSearchUser(true)} className='w-12 h-12 flex justify-center items-center cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700 rounded' >
                         <FaUserPlus size={20}/>
                     </div>
                 </div>
@@ -83,7 +83,8 @@ const Sidebar = () => {
                             userId={user?._id}
                         />
                     </button>
-                    <button title='logout' className='w-12 h-12 flex justify-center items-center cursor-pointer hover:bg-slate-200 rounded' onClick={handleLogout}>
+                    
+                    <button title='logout' className='w-12 h-12 flex justify-center items-center cursor-pointer hover:bg-slate-200 dark:hover:bg-slate-700 rounded' onClick={handleLogout}>
                         <span className='-ml-2'>
                             <BiLogOut size={20}/>
                         </span>
@@ -91,22 +92,22 @@ const Sidebar = () => {
                 </div>
             </div>
 
-            <div className='w-full'>
+            <div className='w-full '>
                 <div className='h-16 flex items-center'>
-                    <h2 className='text-xl font-bold p-4 text-slate-800'>Message</h2>
+                    <h2 className='text-xl font-bold p-4 text-slate-800 dark:text-slate-200'>Message</h2>
                 </div>
-                <div className='bg-slate-200 p-[0.5px]'></div>
+                <div className= 'bg-slate-200 dark:bg-slate-700 p-[0.5px]'></div>
 
                 <div className=' h-[calc(100vh-65px)] overflow-x-hidden overflow-y-auto scrollbar'>
                     {
                         allUser.length === 0 && (
                             <div className='mt-12'>
-                                <div className='flex justify-center items-center my-4 text-slate-500'>
+                                <div className='flex justify-center items-center my-4 text-slate-500 dark:text-slate-400'>
                                     <FiArrowUpLeft
                                         size={50}
                                     />
                                 </div>
-                                <p className='text-lg text-center text-slate-400'>Explore users to start a conversation with.</p>    
+                                <p className='text-lg text-center text-slate-400 dark:text-slate-500'>Explore users to start a conversation with.</p>    
                             </div>
                         )
                     }
@@ -114,7 +115,7 @@ const Sidebar = () => {
                     {
                         allUser.map((conv,index)=>{
                             return(
-                                <NavLink to={"/"+conv?.userDetails?._id} key={conv?._id} className='flex items-center gap-2 py-3 px-2 border border-transparent hover:border-primary rounded hover:bg-slate-100 cursor-pointer'>
+                                <NavLink to={"/"+conv?.userDetails?._id} key={conv?._id} className='flex items-center gap-2 py-3 px-2 border border-transparent hover:border-primary dark:hover:border-primary rounded hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer'>
                                     <div>
                                         <Avatar
                                             imageUrl={conv?.userDetails?.profile_pic}
@@ -124,8 +125,8 @@ const Sidebar = () => {
                                         />    
                                     </div>
                                     <div>
-                                        <h3 className='text-ellipsis line-clamp-1 font-semibold text-base'>{conv?.userDetails?.name}</h3>
-                                        <div className='text-slate-500 text-xs flex items-center gap-1'>
+                                        <h3 className='text-ellipsis line-clamp-1 font-semibold text-base text-slate-800 dark:text-slate-200'>{conv?.userDetails?.name}</h3>
+                                        <div className='text-slate-500 dark:text-slate-400 text-xs flex items-center gap-1'>
                                             <div className='flex items-center gap-1'>
                                                 {
                                                     conv?.lastMsg?.imageUrl && (

@@ -51,7 +51,7 @@ const CheckEmailPage = () => {
 
   return (
     <div className='mt-5'>
-        <div className='bg-white w-full max-w-md  rounded overflow-hidden p-5 mx-auto px-10'>
+        <div className=' w-full max-w-md  rounded overflow-hidden p-5 mx-auto px-10'>
 
             <div className='w-fit mx-auto mb-2'>
                 <PiUserCircle
@@ -69,7 +69,7 @@ const CheckEmailPage = () => {
                   id='email'
                   name='email'
                   placeholder='Enter your email' 
-                  className='bg-slate-100 px-2 py-3 outline-none rounded-lg'
+                  className='bg-slate-100 text-black px-2 py-3 outline-none rounded-lg'
                   value={data.email}
                   onChange={handleOnChange}
                   required

@@ -70,7 +70,7 @@ const CheckPasswordPage = () => {
 
   return (
     <div className='mt-5'>
-        <div className='bg-white w-full max-w-md  rounded overflow-hidden p-5 mx-auto px-10'>
+        <div className=' w-full max-w-md  rounded overflow-hidden p-5 mx-auto px-10'>
 
             <div className='w-fit mx-auto mb-2 flex justify-center items-center flex-col'>
                 {/* <PiUserCircle
@@ -95,7 +95,7 @@ const CheckPasswordPage = () => {
                   id='password'
                   name='password'
                   placeholder='enter your password' 
-                  className='bg-slate-100 px-2 py-2 outline-none rounded-lg'
+                  className='bg-slate-100 px-2 py-2 outline-none rounded-lg text-black'
                   value={data.password}
                   onChange={handleOnChange}
                   required

@@ -18,7 +18,7 @@ const ForgotPassword = () => {
 
     return (
       <div className='mt-5'>
-        <div className='bg-white w-full max-w-md  rounded overflow-hidden p-5 mx-auto px-10 flex flex-col gap-7'>
+        <div className=' w-full max-w-md  rounded overflow-hidden p-5 mx-auto px-10 flex flex-col gap-7'>
             <h2 className='font-bold text-2xl text-center shadow-md p-3 rounded-lg'>Forgot Password</h2>
             <form onSubmit={handleSubmit}>
                 <input
@@ -26,7 +26,7 @@ const ForgotPassword = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="Enter your email"
-                    className='bg-slate-100 px-2 py-2 outline-none rounded-lg w-full mt-2'
+                    className='bg-slate-100 px-2 py-2 outline-none rounded-lg w-full mt-2 text-black'
                     required
                 />
                 <div className='flex gap-1 w-fit mx-auto'>
