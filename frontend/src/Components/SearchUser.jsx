@@ -13,7 +13,7 @@ const SearchUser = ({onClose}) => {
 
 
     const handleSearchUser = async()=>{
-        const URL = 'https://chat-app-backend-cqjd.onrender.com/api/search-user'
+        const URL = `${import.meta.env.VITE_BACKEND_URL}/api/search-user`
         try {
             setLoading(true)
             const response = await axios.post(URL,{

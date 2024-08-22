@@ -50,7 +50,7 @@ const RegisterPage = () => {
     e.preventDefault()
     e.stopPropagation()
 
-      const URL = 'https://chat-app-backend-cqjd.onrender.com/api/register'
+      const URL = `${import.meta.env.VITE_BACKEND_URL}/api/register`
 
     try {
         const response = await axios.post(URL,data,{withCredentials: true})
@@ -77,7 +77,7 @@ const RegisterPage = () => {
 
   return (
     <div className='mt-5'>
-        <div className='bg-white w-full max-w-md  rounded overflow-hidden p-4 mx-auto'>
+        <div className='bg-white w-full max-w-md  rounded overflow-hidden p-4 mx-auto px-10'>
           <form className='grid gap-2 mt-5' onSubmit={handleSubmit}>
               <div className='flex flex-col gap-1'>
                 <label htmlFor='name'>Name :</label>

@@ -12,19 +12,10 @@ const app = express();
 /***socket connection */
 const server = http.createServer(app);
 const io = new Server(server,{
-<<<<<<< HEAD
     cors:{
         origin: process.env.CLIENT_URL,
     }
 });
-=======
-    cors: {
-      origin: 'https://fronten-deploy.onrender.com',
-      credentials: true
-    }
-  }
-);
->>>>>>> 7e8138841231acfc132591dd4eca1e4804d153dc
 
 const onlineUser = new Set();
 

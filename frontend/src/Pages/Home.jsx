@@ -3,12 +3,9 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { logout, setOnlineUser, setSocketConnection, setUser } from '../redux/userSlice'
-<<<<<<< HEAD
-=======
 import Sidebar from '../Components/Sidebar'
->>>>>>> 7e8138841231acfc132591dd4eca1e4804d153dc
 import io from 'socket.io-client'
-import Sidebar from '../Components/Sidebar'
+
 
 const Home = () => {
   const user = useSelector(state => state.user)
@@ -18,7 +15,7 @@ const Home = () => {
 
   const fetchUserDetails = async()=>{
     try {
-        const URL = 'https://chat-app-backend-cqjd.onrender.com/api/user-details'
+        const URL =` ${import.meta.env.VITE_BACKEND_URL}/api/user-details`
         const response = await axios({
           url : URL,
           withCredentials : true
@@ -41,7 +38,7 @@ const Home = () => {
 
   /***socket connection */
   useEffect(()=>{
-    const url='https://chat-app-backend-cqjd.onrender.com'
+    const url=`${import.meta.env.VITE_BACKEND_URL}`
     const socketConnection = io(url,{
       auth : {
         token : localStorage.getItem('token')
@@ -62,13 +59,13 @@ const Home = () => {
 
   const basePath = location.pathname === '/'
   return (
-    <div className='grid lg:grid-cols-[300px,1fr] h-screen max-h-screen'>
+    <div className='grid lg:grid-cols-[300px,1fr] h-screen max-h-screen bg-slate-50'>
         <section className={`bg-white ${!basePath && "hidden"} lg:block`}>
            <Sidebar/>
         </section>
 
-        {/**message component**/}
-        <section className={`${basePath && "hidden"}`} >
+  
+        <section className={`${basePath && "hidden"}`} bg- >
             <Outlet/>
         </section>
 

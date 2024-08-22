@@ -60,7 +60,7 @@ const Sidebar = () => {
 
   return (
     <div className='w-full h-full grid grid-cols-[48px,1fr] bg-white'>
-            <div className='bg-slate-100 w-12 h-full rounded-tr-lg rounded-br-lg py-5 text-slate-600 flex flex-col justify-between'>
+            <div className='bg-slate-100 w-12 h-[90vh] rounded-tr-lg rounded-br-lg py-5 text-slate-600 flex flex-col justify-between'>
                 <div>
                     <NavLink className={({isActive})=>`w-12 h-12 flex justify-center items-center cursor-pointer hover:bg-slate-200 rounded ${isActive && "bg-slate-200"}`} title='chat'>
                         <IoChatbubbleEllipses

@@ -3,7 +3,7 @@ import React from 'react';
 const Header = () => {
   return (
     <>
-      <div className="navbar bg-white text-black px-5 lg:px-20 ">
+      <div className="navbar bg-slate-100 text-black px-5 lg:px-20 ">
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost btn-circle">
@@ -24,7 +24,7 @@ const Header = () => {
           </div>
         </div>
         <div className="navbar-center">
-          <a className="btn btn-ghost text-xl">Sk.Chat</a>
+          <a className="btn btn-ghost text-2xl">Sk.Chat</a>
         </div>
         <div className="navbar-end">
           <button className="btn btn-ghost btn-circle">

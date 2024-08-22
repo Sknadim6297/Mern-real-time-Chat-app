@@ -61,7 +61,7 @@ const EditUserDetails = ({onClose,user}) => {
         e.stopPropagation();
     
         try {
-            const URL = 'https://chat-app-backend-cqjd.onrender.com/api/update-user';
+            const URL = `${import.meta.env.VITE_BACKEND_URL}/api/update-user`;
     
            
             const updatedData = {

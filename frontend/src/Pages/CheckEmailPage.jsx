@@ -26,7 +26,7 @@ const CheckEmailPage = () => {
     e.preventDefault()
     e.stopPropagation()
 
-    const URL = 'https://chat-app-backend-cqjd.onrender.com/api/email'
+    const URL = `${import.meta.env.VITE_BACKEND_URL}/api/email`
 
     try {
         const response = await axios.post(URL,data,{
@@ -51,7 +51,7 @@ const CheckEmailPage = () => {
 
   return (
     <div className='mt-5'>
-        <div className='bg-white w-full max-w-md  rounded overflow-hidden p-4 mx-auto'>
+        <div className='bg-white w-full max-w-md  rounded overflow-hidden p-5 mx-auto px-10'>
 
             <div className='w-fit mx-auto mb-2'>
                 <PiUserCircle
