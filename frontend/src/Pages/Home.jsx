@@ -49,8 +49,9 @@ const Home = () => {
       navigate('/email');
       return;
     }
+    const socketURL = 'wss://mern-real-time-chat-app-1.onrender.com';
 
-    const socketConnection = io(import.meta.env.VITE_BACKEND_URL, {
+    const socketConnection = io(socketURL, {
       auth: { token },
       timeout: 5000,
       transports: ['websocket'],

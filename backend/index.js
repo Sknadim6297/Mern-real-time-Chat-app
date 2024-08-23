@@ -7,7 +7,7 @@ require('dotenv').config();
 const router = require('./routes/index');
 const cookiesParser = require('cookie-parser');
 const { app, server } = require('./socket/index');
-const mongoConnection = require('./config/connectDB');
+const mongoose = require('mongoose'); // Import mongoose directly
 
 const PORT = process.env.PORT || 4000;
 
@@ -40,7 +40,11 @@ app.use((err, req, res, next) => {
 });
 
 // Connect to MongoDB and start the server
-mongoConnection.then(() => {
+mongoose.connect(process.env.MONGODB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+}).then(() => {
+    console.log("Database connected successfully");
     server.listen(PORT, () => {
         console.log("Server running at " + PORT);
     });
@@ -49,11 +53,18 @@ mongoConnection.then(() => {
 });
 
 // Graceful shutdown
-const shutdown = () => {
-    server.close(() => {
-        console.log('Server closed');
-        mongoConnection.disconnect();
-    });
+const shutdown = async () => {
+    try {
+        await mongoose.disconnect(); // Correct way to disconnect
+        console.log('MongoDB disconnected');
+    } catch (error) {
+        console.error('Error disconnecting MongoDB:', error);
+    } finally {
+        server.close(() => {
+            console.log('Server closed');
+            process.exit(0);
+        });
+    }
 };
 
 process.on('SIGTERM', shutdown);

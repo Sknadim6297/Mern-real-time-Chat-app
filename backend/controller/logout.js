@@ -2,7 +2,7 @@ async function logout(request, response) {
     try {
         const cookieOptions = {
             httpOnly: true,
-            secure: process.env.NODE_ENV === 'production', // Only secure cookies in production
+            secure: 'true', // Only secure cookies in production
             sameSite: 'None',
             expires: new Date(0) // Set expiration date to the past
         };
