@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { logout, setOnlineUser, setSocketConnection, setUser } from '../redux/userSlice'
-import Sidebar from '../components/Sidebar'
+import Sidebar from '../Components/Sidebar'
 import io from 'socket.io-client'
 
 const Home = () => {
