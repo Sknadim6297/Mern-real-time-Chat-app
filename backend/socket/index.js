@@ -9,7 +9,7 @@ const getConversation = require('../helpers/getConversation');
 
 const app = express();
 
-/***socket connection */
+// Socket connection setup
 const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
@@ -21,12 +21,12 @@ const io = new Server(server, {
 const onlineUser = new Set();
 
 io.on('connection', async (socket) => {
-    console.log("User connected ", socket.id);
+    console.log("User connected:", socket.id);
 
     // Token validation and user retrieval
     const token = socket.handshake.auth.token;
     let user;
-    
+
     try {
         user = await getUserDetailsFromToken(token);
     } catch (err) {
@@ -34,30 +34,27 @@ io.on('connection', async (socket) => {
         return socket.disconnect();
     }
 
-    // Check if user is valid
     if (!user || !user._id) {
-        console.error('User not found or invalid token');
+        console.error('Invalid token or user not found');
         return socket.disconnect();
     }
 
-    // Create a room and add user to online users
+    // Join the user's room and add them to the online users set
     socket.join(user._id.toString());
     onlineUser.add(user._id.toString());
 
-    // Emit online users
+    // Emit the list of online users
     io.emit('onlineUser', Array.from(onlineUser));
 
-    // Handle message page request
+    // Handle message page requests
     socket.on('message-page', async (userId) => {
         if (!userId) {
             console.error('UserId is undefined');
             return;
         }
 
-        console.log('UserId:', userId);
         try {
             const userDetails = await UserModel.findById(userId).select("-password");
-
             if (userDetails) {
                 const payload = {
                     _id: userDetails._id,
@@ -71,21 +68,20 @@ io.on('connection', async (socket) => {
                 console.error('User details not found');
             }
 
-            // Get previous messages
-            const getConversationMessage = await ConversationModel.findOne({
+            const conversation = await ConversationModel.findOne({
                 "$or": [
                     { sender: user._id, receiver: userId },
                     { sender: userId, receiver: user._id }
                 ]
             }).populate('messages').sort({ updatedAt: -1 });
 
-            socket.emit('message', getConversationMessage?.messages || []);
+            socket.emit('message', conversation?.messages || []);
         } catch (err) {
             console.error('Error handling message-page event:', err);
         }
     });
 
-    // Handle new message
+    // Handle new messages
     socket.on('new message', async (data) => {
         if (!data || !data.sender || !data.receiver) {
             console.error('Message data is incomplete');
@@ -100,13 +96,11 @@ io.on('connection', async (socket) => {
                 ]
             });
 
-            // If conversation is not available, create a new one
             if (!conversation) {
-                const createConversation = new ConversationModel({
+                conversation = await new ConversationModel({
                     sender: data.sender,
                     receiver: data.receiver
-                });
-                conversation = await createConversation.save();
+                }).save();
             }
 
             const message = new MessageModel({
@@ -115,23 +109,24 @@ io.on('connection', async (socket) => {
                 videoUrl: data.videoUrl,
                 msgByUserId: data.msgByUserId,
             });
-            const saveMessage = await message.save();
 
-            await ConversationModel.updateOne({ _id: conversation._id }, {
-                "$push": { messages: saveMessage._id }
-            });
+            const savedMessage = await message.save();
 
-            const getConversationMessage = await ConversationModel.findOne({
+            await ConversationModel.updateOne(
+                { _id: conversation._id },
+                { "$push": { messages: savedMessage._id } }
+            );
+
+            const updatedConversation = await ConversationModel.findOne({
                 "$or": [
                     { sender: data.sender, receiver: data.receiver },
                     { sender: data.receiver, receiver: data.sender }
                 ]
             }).populate('messages').sort({ updatedAt: -1 });
 
-            io.to(data.sender).emit('message', getConversationMessage?.messages || []);
-            io.to(data.receiver).emit('message', getConversationMessage?.messages || []);
+            io.to(data.sender).emit('message', updatedConversation?.messages || []);
+            io.to(data.receiver).emit('message', updatedConversation?.messages || []);
 
-            // Send conversation updates
             const conversationSender = await getConversation(data.sender);
             const conversationReceiver = await getConversation(data.receiver);
 
@@ -142,14 +137,13 @@ io.on('connection', async (socket) => {
         }
     });
 
-    // Handle sidebar request
+    // Handle sidebar requests
     socket.on('sidebar', async (currentUserId) => {
         if (!currentUserId) {
             console.error('CurrentUserId is undefined');
             return;
         }
 
-        console.log("Current user:", currentUserId);
         try {
             const conversation = await getConversation(currentUserId);
             socket.emit('conversation', conversation);
@@ -158,7 +152,7 @@ io.on('connection', async (socket) => {
         }
     });
 
-    // Handle seen event
+    // Handle seen message event
     socket.on('seen', async (msgByUserId) => {
         if (!msgByUserId) {
             console.error('msgByUserId is undefined');
@@ -196,7 +190,8 @@ io.on('connection', async (socket) => {
     // Handle disconnect
     socket.on('disconnect', () => {
         onlineUser.delete(user._id.toString());
-        console.log('User disconnected', socket.id);
+        io.emit('onlineUser', Array.from(onlineUser)); // Update online users list
+        console.log('User disconnected:', socket.id);
     });
 });
 

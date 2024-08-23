@@ -7,7 +7,7 @@ import { setToken } from '../redux/userSlice';
 import Avatar from '../Components/Avatar';
 
 const CheckPasswordPage = () => {
-  const [data, setData] = useState({ password: "" });
+  const [password, setPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
@@ -20,34 +20,30 @@ const CheckPasswordPage = () => {
   }, [location, navigate]);
 
   const handleOnChange = (e) => {
-    const { name, value } = e.target;
-    setData((prev) => ({ ...prev, [name]: value }));
+    setPassword(e.target.value);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
 
-    if (!location?.state?._id) {
+    const { _id } = location?.state || {};
+
+    if (!_id) {
       toast.error("User ID not found. Please try again.");
+      setIsSubmitting(false);
       return;
     }
 
-    setIsSubmitting(true);
-
-    const URL = `${import.meta.env.VITE_BACKEND_URL}/api/password`;
-
     try {
-      const response = await axios.post(URL, {
-        userId: location.state._id,
-        password: data.password
-      }, { withCredentials: true });
+      const URL = `${import.meta.env.VITE_BACKEND_URL}/api/password`;
+      const response = await axios.post(URL, { userId: _id, password }, { withCredentials: true });
 
       toast.success(response.data.message);
 
       if (response.data.success) {
         dispatch(setToken(response.data.token));
         localStorage.setItem('token', response.data.token);
-        setData({ password: "" });
         navigate('/');
       }
     } catch (error) {
@@ -80,7 +76,7 @@ const CheckPasswordPage = () => {
               name='password'
               placeholder='Enter your password'
               className='bg-slate-100 px-2 py-2 outline-none rounded-lg text-black'
-              value={data.password}
+              value={password}
               onChange={handleOnChange}
               required
               aria-label='Password'
