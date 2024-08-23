@@ -1,22 +1,22 @@
 async function logout(request, response) {
-    try {
-        const cookieOptions = {
-            httpOnly: true,
-            secure: 'true', // Only secure cookies in production
-            sameSite: 'None',
-            expires: new Date(0) // Set expiration date to the past
-        };
+  try {
+    const cookieOptions = {
+      http: true,
+      secure: true,
+      sameSite: "None",
+      expires: new Date(0),
+    };
 
-        return response.cookie('token', '', cookieOptions).status(200).json({
-            message: "Session ended",
-            success: true
-        });
-    } catch (error) {
-        return response.status(500).json({
-            message: error.message || "Internal Server Error",
-            error: true
-        });
-    }
+    return response.cookie("token", "", cookieOptions).status(200).json({
+      message: "session out",
+      success: true,
+    });
+  } catch (error) {
+    return response.status(500).json({
+      message: error.message || error,
+      error: true,
+    });
+  }
 }
 
 module.exports = logout;

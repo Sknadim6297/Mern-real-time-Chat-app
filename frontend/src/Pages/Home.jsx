@@ -49,30 +49,40 @@ const Home = () => {
       navigate('/email');
       return;
     }
-    const socketURL = 'wss://mern-real-time-chat-app-1.onrender.com';
-
+  
+    const socketURL = 'ws://localhost:5000';
+    console.log(`Connecting to WebSocket at ${socketURL} with token ${token}`);
+  
     const socketConnection = io(socketURL, {
       auth: { token },
       timeout: 5000,
       transports: ['websocket'],
     });
-
+  
+    socketConnection.on('connect', () => {
+      console.log('WebSocket connected');
+    });
+  
     socketConnection.on('onlineUser', (data) => {
       dispatch(setOnlineUser(data));
     });
-
+  
     socketConnection.on('connect_error', (err) => {
       console.error('WebSocket connection error:', err);
       toast.error('Unable to connect to WebSocket. Please try again later.');
     });
-
+  
+    socketConnection.on('disconnect', (reason) => {
+      console.log('WebSocket disconnected:', reason);
+    });
+  
     dispatch(setSocketConnection(socketConnection));
-
+  
     return () => {
+      console.log('Disconnecting WebSocket');
       socketConnection.disconnect();
     };
   }, [dispatch, navigate]);
-
   const basePath = location.pathname === '/';
 
   return (

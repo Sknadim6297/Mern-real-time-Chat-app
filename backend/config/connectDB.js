@@ -10,5 +10,4 @@ mongoose.connect(process.env.MONGODB_URI, {
     console.log("Error while connecting to database", error.message);
 });
 
-// Export mongoose for use elsewhere
 module.exports = mongoose;
