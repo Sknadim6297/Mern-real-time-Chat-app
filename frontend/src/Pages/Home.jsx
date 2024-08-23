@@ -50,11 +50,11 @@ const Home = () => {
       return;
     }
   
-    const socketURL = 'ws://localhost:5000';
+    const socketURL = 'wss://mern-real-time-chat-app-1.onrender.com';
     console.log(`Connecting to WebSocket at ${socketURL} with token ${token}`);
   
     const socketConnection = io(socketURL, {
-      auth: { token },
+      auth: token ,
       timeout: 5000,
       transports: ['websocket'],
     });
@@ -83,6 +83,7 @@ const Home = () => {
       socketConnection.disconnect();
     };
   }, [dispatch, navigate]);
+
   const basePath = location.pathname === '/';
 
   return (
