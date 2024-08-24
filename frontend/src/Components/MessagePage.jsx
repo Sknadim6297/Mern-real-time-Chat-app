@@ -227,8 +227,8 @@ const MessagePage = () => {
             value={message.text}
             onChange={handleOnChange}
           />
-          <button type='submit' className='h-full w-11 flex justify-center items-center rounded-full hover:bg-red-400 hover:text-white'>
-            <IoSend size={20} />
+          <button type='submit' className=' w-16 flex justify-center items-center rounded-full hover:bg-red-400 hover:text-white'>
+            <IoSend size={18} />
           </button>
         </form>
       </section>
