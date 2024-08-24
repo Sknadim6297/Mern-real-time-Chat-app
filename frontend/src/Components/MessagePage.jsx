@@ -14,7 +14,7 @@ const MessagePage = () => {
   const params = useParams();
   const socketConnection = useSelector(state => state.user.socketConnection);
   const user = useSelector(state => state.user);
-  
+
   const [dataUser, setDataUser] = useState({
     name: "",
     email: "",
@@ -109,9 +109,9 @@ const MessagePage = () => {
   return (
     <div
       style={{ backgroundImage: `url(${backgroundImage})` }}
-      className='bg-no-repeat bg-cover dark:bg-gray-900 dark:text-white h-screen flex flex-col'>
+      className='bg-no-repeat bg-cover dark:bg-gray-900 dark:text-white h-[90vh] flex flex-col'>
       
-      <header className='sticky top-0 h-16 bg-white dark:bg-gray-800 flex justify-between items-center px-4 border-b border-zinc-900'>
+      <header className='sticky top-0 h-14 bg-white dark:bg-gray-800 flex justify-between items-center px-4 border-b border-zinc-900'>
         <div className='flex items-center gap-4'>
           <Link to="/" className='lg:hidden'>
             <FaAngleLeft size={25} />
@@ -136,7 +136,7 @@ const MessagePage = () => {
       </header>
 
       <main className='flex-1 overflow-hidden'>
-        <section className='h-[calc(100vh-128px)] overflow-x-hidden overflow-y-scroll scrollbar relative bg-slate-200 bg-opacity-50 dark:bg-gray-800'>
+        <section className='h-[calc(100vh-120px)] overflow-x-hidden overflow-y-scroll scrollbar relative bg-slate-200 bg-opacity-50 dark:bg-gray-800'>
           <div className='flex flex-col gap-2 py-2 mx-2' ref={currentMessage}>
             {allMessage.map((msg, index) => (
               <div
@@ -183,7 +183,7 @@ const MessagePage = () => {
         </section>
       </main>
 
-      <section className='h-16 bg-white dark:bg-gray-800 flex items-center px-6 border-t border-zinc-900'>
+      <section className='h-16  bg-white dark:bg-gray-800 flex items-center  border-t border-zinc-900'>
         <div className='relative'>
           <button onClick={handleUploadImageVideoOpen} className='flex justify-center items-center w-11 h-11 rounded-full hover:bg-red-400 hover:text-white'>
             <FaPlus size={20} />
@@ -220,14 +220,15 @@ const MessagePage = () => {
 
         <form className='h-full w-full flex gap-2' onSubmit={handleSendMessage}>
           <input
-            type='text'
-            placeholder='Type here message...'
-            className='px-4 outline-none w-full h-full bg-white dark:bg-gray-800'
+            type="text"
+            name='text'
+            placeholder="Message..."
+            className=' flex-1 rounded-full px-5 my-2  border-0 focus:ring-0 focus:outline-none bg-slate-200 dark:bg-gray-700'
             value={message.text}
             onChange={handleOnChange}
           />
-          <button type='submit' className='text-red-800 hover:text-red-500'>
-            <IoSend size={25} />
+          <button type='submit' className='h-full w-11 flex justify-center items-center rounded-full hover:bg-red-400 hover:text-white'>
+            <IoSend size={20} />
           </button>
         </form>
       </section>
