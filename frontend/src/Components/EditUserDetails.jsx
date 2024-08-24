@@ -93,8 +93,6 @@ const EditUserDetails = ({ onClose, user }) => {
                         <div className='text-gray-900 dark:text-gray-100'>Photo:</div>
                         <div className='my-1 flex items-center gap-4'>
                             <Avatar
-                                width={40}
-                                height={40}
                                 imageUrl={data?.profile_pic}
                                 name={data?.name}
                             />

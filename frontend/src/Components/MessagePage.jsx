@@ -117,8 +117,7 @@ const MessagePage = () => {
             <FaAngleLeft size={25} />
           </Link>
           <Avatar
-            width={50}
-            height={50}
+            className='Overflow-hidden rounded-full'
             imageUrl={dataUser.profile_pic}
             name={dataUser.name}
             userId={dataUser._id}

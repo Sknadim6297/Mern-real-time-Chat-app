@@ -1,88 +1,62 @@
 import axios from 'axios';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Outlet, useLocation, useNavigate } from 'react-router-dom';
-import { logout, setOnlineUser, setSocketConnection, setUser } from '../redux/userSlice';
-import Sidebar from '../Components/Sidebar';
-import io from 'socket.io-client';
-import toast from 'react-hot-toast'; // Ensure toast is imported
+  import { Outlet, useLocation, useNavigate } from 'react-router-dom';
+  import { logout, setOnlineUser, setSocketConnection, setUser } from '../redux/userSlice';
+  import Sidebar from '../Components/Sidebar';
+  import io from 'socket.io-client';
+  import toast from 'react-hot-toast'; // Ensure toast is imported
 
-const Home = () => {
-  const user = useSelector(state => state.user);
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const location = useLocation();
-
-  // Function to fetch user details with retry logic
-  const fetchUserDetails = async (retries = 3) => {
-    try {
-      const URL = `${import.meta.env.VITE_BACKEND_URL}/api/user-details`;
-      const response = await axios.get(URL, { withCredentials: true });
-      
-      console.log(response.data.data);
-
-      dispatch(setUser(response.data.data));
-
-      if (response.data.data.logout) {
-        dispatch(logout());
-        navigate("/email");
-      }
-    } catch (error) {
-      if (retries > 0) {
-        console.log(`Retrying... (${3 - retries} attempts left)`);
-        setTimeout(() => fetchUserDetails(retries - 1), 1000);
-      } else {
-        console.error("Failed to fetch user details after multiple attempts:", error);
-        toast.error("Failed to fetch user details. Please try again later.");
+  const Home = () => {
+    const user = useSelector(state => state.user)
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const location = useLocation()
+  
+    console.log('user',user)
+    const fetchUserDetails = async()=>{
+      try {
+          const URL = `${import.meta.env.VITE_BACKEND_URL}/api/user-details`
+          const response = await axios({
+            url : URL,
+            withCredentials : true
+          })
+  
+          dispatch(setUser(response.data.data))
+  
+          if(response.data.data.logout){
+              dispatch(logout())
+              navigate("/email")
+          }
+          console.log("current user Details",response)
+      } catch (error) {
+          console.log("error",error)
       }
     }
-  };
-
-  useEffect(() => {
-    fetchUserDetails();
-  }, [dispatch, navigate]);
-
-  // Function to establish socket connection
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      navigate('/email');
-      return;
-    }
   
-    const socketURL = 'wss://mern-real-time-chat-app-1.onrender.com';
-    console.log(`Connecting to WebSocket at ${socketURL} with token ${token}`);
+    useEffect(()=>{
+      fetchUserDetails()
+    },[])
   
-    const socketConnection = io(socketURL, {
-      auth: token ,
-      timeout: 5000,
-      transports: ['websocket'],
-    });
+    /***socket connection */
+    useEffect(()=>{
+      const socketConnection = io(import.meta.env.VITE_BACKEND_URL,{
+        auth : {
+          token : localStorage.getItem('token')
+        },
+      })
   
-    socketConnection.on('connect', () => {
-      console.log('WebSocket connected');
-    });
+      socketConnection.on('onlineUser',(data)=>{
+        console.log(data)
+        dispatch(setOnlineUser(data))
+      })
   
-    socketConnection.on('onlineUser', (data) => {
-      dispatch(setOnlineUser(data));
-    });
+      dispatch(setSocketConnection(socketConnection))
   
-    socketConnection.on('connect_error', (err) => {
-      console.error('WebSocket connection error:', err);
-      toast.error('Unable to connect to WebSocket. Please try again later.');
-    });
-  
-    socketConnection.on('disconnect', (reason) => {
-      console.log('WebSocket disconnected:', reason);
-    });
-  
-    dispatch(setSocketConnection(socketConnection));
-  
-    return () => {
-      console.log('Disconnecting WebSocket');
-      socketConnection.disconnect();
-    };
-  }, [dispatch, navigate]);
+      return ()=>{
+        socketConnection.disconnect()
+      }
+    },[])
 
   const basePath = location.pathname === '/';
 

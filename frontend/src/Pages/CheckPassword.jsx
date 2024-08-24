@@ -59,8 +59,7 @@ const CheckPasswordPage = () => {
       <div className='w-full max-w-md rounded overflow-hidden p-5 mx-auto px-10'>
         <div className='w-fit mx-auto mb-2 flex justify-center items-center flex-col'>
           <Avatar
-            width={70}
-            height={70}
+            size={70}
             name={location?.state?.name}
             imageUrl={location?.state?.profile_pic || '/default-avatar.png'}
           />

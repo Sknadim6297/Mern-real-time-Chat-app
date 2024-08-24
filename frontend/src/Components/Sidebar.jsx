@@ -76,8 +76,6 @@ const Sidebar = () => {
                 <div className='flex flex-col items-center'>
                     <button className='mx-auto' title={user?.name} onClick={()=>setEditUserOpen(true)}>
                         <Avatar
-                            width={35}
-                            height={35}
                             name={user?.name}
                             imageUrl={user?.profile_pic}
                             userId={user?._id}
