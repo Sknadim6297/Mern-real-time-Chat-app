@@ -10,7 +10,6 @@ const getConversation = require('../helpers/getConversation');
 const app = express();
 
 // Socket connection setup
-
 const server = http.createServer(app);
 const io = new Server(server, {
     cors: {
@@ -154,32 +153,36 @@ io.on('connection', async (socket) => {
     });
 
     // Handle seen message event
-    socket.on('seen', async (msgByUserId) => {
-        if (!msgByUserId) {
-            console.error('msgByUserId is undefined');
+    socket.on('seen', async (receiverId) => {
+        if (!receiverId) {
+            console.error('receiverId is undefined');
             return;
         }
 
         try {
             const conversation = await ConversationModel.findOne({
                 "$or": [
-                    { sender: user._id, receiver: msgByUserId },
-                    { sender: msgByUserId, receiver: user._id }
+                    { sender: user._id, receiver: receiverId },
+                    { sender: receiverId, receiver: user._id }
                 ]
             });
 
             if (conversation) {
-                const conversationMessageId = conversation.messages || [];
+                const conversationMessageIds = conversation.messages || [];
                 await MessageModel.updateMany(
-                    { _id: { "$in": conversationMessageId }, msgByUserId: msgByUserId },
+                    { _id: { "$in": conversationMessageIds }, msgByUserId: receiverId, seen: false },
                     { "$set": { seen: true } }
                 );
 
+                // Notify the sender that their messages have been read
+                io.to(receiverId).emit('messages-read', user._id);
+
+                // Update conversations for both sender and receiver
                 const conversationSender = await getConversation(user._id.toString());
-                const conversationReceiver = await getConversation(msgByUserId);
+                const conversationReceiver = await getConversation(receiverId);
 
                 io.to(user._id.toString()).emit('conversation', conversationSender);
-                io.to(msgByUserId).emit('conversation', conversationReceiver);
+                io.to(receiverId).emit('conversation', conversationReceiver);
             } else {
                 console.error('Conversation not found in seen event');
             }

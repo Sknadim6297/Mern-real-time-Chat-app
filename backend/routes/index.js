@@ -8,6 +8,7 @@ const updateUserDetails = require('../controller/updateUserDetails')
 const searchUser = require('../controller/searchUser')
 const forgetPassword = require('../controller/forgotPassword')
 const resetPassword = require('../controller/ResetPassword')
+const { markMessagesAsRead } = require('../controller/ReadMessage')
 
 
 const router = express.Router()
@@ -30,6 +31,7 @@ router.post("/search-user",searchUser)
 
 router.post('/forgot-password',forgetPassword)
 router.post('/reset-password/:token',resetPassword)
+router.post('mark-messages-as-read',markMessagesAsRead)
 
 
 module.exports = router

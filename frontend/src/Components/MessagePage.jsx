@@ -4,6 +4,7 @@ import { Link, useParams } from 'react-router-dom';
 import { HiDotsVertical } from "react-icons/hi";
 import { FaAngleLeft, FaPlus, FaImage, FaVideo } from "react-icons/fa";
 import { IoClose, IoSend } from "react-icons/io5";
+import { BsCheck2All, BsCheck2 } from 'react-icons/bs'; // Import both tick icons
 import backgroundImage from '../assets/wallapaper.jpeg';
 import moment from 'moment';
 import uploadFile from '../helpers/uploadFiles';
@@ -45,10 +46,12 @@ const MessagePage = () => {
 
       socketConnection.on('message-user', setDataUser);
       socketConnection.on('message', setAllMessage);
+      socketConnection.on('messages-read', handleMessagesRead);
 
       return () => {
         socketConnection.off('message-user');
         socketConnection.off('message');
+        socketConnection.off('messages-read');
       };
     }
   }, [socketConnection, params.userId]);
@@ -106,6 +109,14 @@ const MessagePage = () => {
     }
   };
 
+  const handleMessagesRead = (userId) => {
+    setAllMessage(prevMessages =>
+      prevMessages.map(msg =>
+        msg.msgByUserId === userId ? { ...msg, seen: true } : msg
+      )
+    );
+  };
+
   return (
     <div
       style={{ backgroundImage: `url(${backgroundImage})` }}
@@ -149,6 +160,13 @@ const MessagePage = () => {
                 </div>
                 <p className='px-2'>{msg.text}</p>
                 <p className='text-xs ml-auto w-fit'>{moment(msg.createdAt).format('hh:mm')}</p>
+                <div className='flex flex-row justify-end gap-1'>
+                  {msg.seen ? (
+                    <BsCheck2All size={16} className='text-blue-500' /> // Blue tick for seen
+                  ) : (
+                    <BsCheck2 size={16} className='text-slate-400' /> // Outline tick for unseen
+                  )}
+                </div>
               </div>
             ))}
           </div>
@@ -193,47 +211,50 @@ const MessagePage = () => {
             <div className='bg-white shadow rounded absolute bottom-14 w-36 p-2 dark:bg-gray-800 border border-zinc-900'>
               <form>
                 <label htmlFor='uploadImage' className='flex items-center p-2 px-3 gap-3 hover:bg-slate-200 cursor-pointer dark:hover:bg-gray-700'>
-                  <FaImage size={18} className='text-primary' />
-                  <p>Image</p>
+                  <FaImage size={18} />
+                  <span>Image</span>
                 </label>
                 <label htmlFor='uploadVideo' className='flex items-center p-2 px-3 gap-3 hover:bg-slate-200 cursor-pointer dark:hover:bg-gray-700'>
-                  <FaVideo size={18} className='text-purple-500' />
-                  <p>Video</p>
+                  <FaVideo size={18} />
+                  <span>Video</span>
                 </label>
-
                 <input
                   type='file'
                   id='uploadImage'
                   onChange={(e) => handleUpload(e.target.files[0], 'image')}
-                  className='hidden'
+                  style={{ display: 'none' }}
                 />
                 <input
                   type='file'
                   id='uploadVideo'
                   onChange={(e) => handleUpload(e.target.files[0], 'video')}
-                  className='hidden'
+                  style={{ display: 'none' }}
                 />
               </form>
             </div>
           )}
         </div>
 
-        <form className='flex-1 flex gap-2' onSubmit={handleSendMessage}>
-          <input
-            type="text"
+        <form className='w-full flex items-center mx-2'>
+          <textarea
             name='text'
-            placeholder="Message..."
-            className='flex-1 rounded-full px-5 bg-slate-200 dark:bg-gray-700'
             value={message.text}
             onChange={handleOnChange}
+            rows='1'
+            placeholder='Type a message...'
+            className='resize-none overflow-hidden flex-1 p-2 border rounded border-gray-300 dark:border-gray-600 bg-transparent dark:bg-gray-800'
           />
-          <button type="submit" className='w-11 h-11 flex justify-center items-center rounded-full hover:bg-red-400 hover:text-white'>
-            <IoSend size={20} />
+          <button
+            type='submit'
+            onClick={handleSendMessage}
+            className='ml-2 bg-primary text-white p-2 rounded-full hover:bg-blue-700 dark:bg-blue-600 dark:hover:bg-blue-700'
+          >
+            <IoSend size={25} />
           </button>
         </form>
       </section>
     </div>
   );
-}
+};
 
 export default MessagePage;
