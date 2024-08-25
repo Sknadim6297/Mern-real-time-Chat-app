@@ -4,7 +4,7 @@ import { Link, useParams } from 'react-router-dom';
 import { HiDotsVertical } from "react-icons/hi";
 import { FaAngleLeft, FaPlus, FaImage, FaVideo } from "react-icons/fa";
 import { IoClose, IoSend } from "react-icons/io5";
-import { BsCheck2All, BsCheck2 } from 'react-icons/bs'; // Import both tick icons
+import { BsCheck2All, BsCheck2 } from 'react-icons/bs'; // Import tick icons
 import backgroundImage from '../assets/wallapaper.jpeg';
 import moment from 'moment';
 import uploadFile from '../helpers/uploadFiles';
@@ -160,13 +160,15 @@ const MessagePage = () => {
                 </div>
                 <p className='px-2'>{msg.text}</p>
                 <p className='text-xs ml-auto w-fit'>{moment(msg.createdAt).format('hh:mm')}</p>
-                <div className='flex flex-row justify-end gap-1'>
-                  {msg.seen ? (
-                    <BsCheck2All size={16} className='text-blue-500' /> // Blue tick for seen
-                  ) : (
-                    <BsCheck2 size={16} className='text-slate-400' /> // Outline tick for unseen
-                  )}
-                </div>
+                {user._id === msg.msgByUserId && (
+                  <div className='flex justify-end gap-1'>
+                    {msg.seen ? (
+                      <BsCheck2All size={15} className='text-blue-500' /> 
+                    ) : (
+                      <BsCheck2 size={16} className='text-slate-400' />
+                    )}
+                  </div>
+                )}
               </div>
             ))}
           </div>
@@ -208,7 +210,7 @@ const MessagePage = () => {
           </button>
 
           {openImageVideoUpload && (
-            <div className='bg-white shadow rounded absolute bottom-14 w-36 p-2 dark:bg-gray-800 border border-zinc-900'>
+            <div className='bg-white shadow-md dark:bg-gray-800 rounded overflow-hidden absolute bottom-12 w-[10rem]'>
               <form>
                 <label htmlFor='uploadImage' className='flex items-center p-2 px-3 gap-3 hover:bg-slate-200 cursor-pointer dark:hover:bg-gray-700'>
                   <FaImage size={18} />
